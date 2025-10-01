@@ -10,9 +10,24 @@ void showProdIds(){
 
 int main(){
 
-    _fillProd();
-    showAllProd();
-    showDetailProd(LProd[2]);
+    char string1[]="HeLlo";
+    char lowered[sizeof(string1)];
+    lowerString(lowered, string1);
+    printf("Original: %s\n", string1);
+    printf("Lowered: %s\n", lowered);
+
+
+    // _fillProd();
+    // showAllProd();
+    // showDetailProd(LProd[2]);
+    // char string1[10], string2[10];
+    // int integer;
+    // printf("Entez un nombre");
+    // scanf("%d",&integer);
+    // printf("Entrez le premier string: ");
+    // scanf("%s", string1);
+    // printf("Entrez le deuxieme string: ");
+    // scanf("%s", string2);
     // showProdIds();
     // sortByCat();
     // showAllProd();

@@ -5,8 +5,8 @@
 * insertion des infos d'un client ✔️
 * selection d'un produit ✔️
     * afficher detail de produit ✔️
-    * quantity de produit
-        * quantity < stock & quantity * price < solde
+    * quantity de produit ✔️
+        * quantity < stock & quantity * price < solde ✔
 * historique
 * historique size == statistique
 * getProduitById(id) : name  quantity
@@ -15,14 +15,14 @@
 
 1. 👤 Gestion du profil client
     * Création de profil : Saisie nom, prénom → génération automatique ID et email ✔️
-    * Modification du profil : Mise à jour nom et prénom
-    * Consultation du profil : Affichage informations client + solde actuel
+    * Modification du profil : Mise à jour nom et prénom ✔️
+    * Consultation du profil : Affichage informations client + solde actuel ✔️
     * Génération email : prénom.nom@client.com ✔️
 
 2. 💰 Gestion du solde virtuel
-    * Consultation du solde : Affichage du montant disponible
-    * Dépôt d'argent : Alimentation du solde virtuel
-    * Vérification automatique : Contrôle du solde avant chaque achat 
+    * Consultation du solde : Affichage du montant disponible ✔️
+    * Dépôt d'argent : Alimentation du solde virtuel ✔️
+    * Vérification automatique : Contrôle du solde avant chaque achat ✔️
 
 3. 🏪 Consultation des produits
     * Affichage catalogue : Liste produits avec prix et stock ✔️
@@ -33,10 +33,10 @@
 
 4. 🛒 Effectuer un achat
     * Sélection de produit : Choix parmi le catalogue disponible ✔️
-    * Vérifications : Contrôle du stock et adéquation solde/prix 
-    * Paiement : Débit automatique du solde virtuel
-    * Mise à jour : Actualisation du stock produit et solde client
-    * Confirmation : Message de succès ou d'échec de la transaction
+    * Vérifications : Contrôle du stock et adéquation solde/prix ✔️
+    * Paiement : Débit automatique du solde virtuel ✔️
+    * Mise à jour : Actualisation du stock produit et solde client ✔️
+    * Confirmation : Message de succès ou d'échec de la transaction ✔️
 
 5. 📊 Mes statistiques
 
@@ -62,3 +62,7 @@
 * Recherche séquentielle : Pour trouver un produit par nom ✔️
 * Recherche par catégorie : Pour filtrer les produits (bonus) ✔️
 * Recherche par prix : Produits dans une fourchette de prix (bonus) ✔️
+
+TOLOWER;
+
+
