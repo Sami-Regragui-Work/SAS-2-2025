@@ -58,6 +58,23 @@ void showDetailProd(Produit prod){
     printf("-----------------------------------------------------------------------------------------------\n");
 }
 
+void showCats(void){
+    printf("Categories disponibles:\n");
+    printf("-------------------------------------------------\n");
+    printf("| %-30s |\n", "Categorie");
+    printf("-------------------------------------------------\n");
+    printf("| %-30s |\n", "Electroniques");
+    printf("-------------------------------------------------\n");
+    printf("| %-30s |\n", "Telephones et tablettes");
+    printf("-------------------------------------------------\n");
+    printf("| %-30s |\n", "Montres");
+    printf("-------------------------------------------------\n");
+    printf("| %-30s |\n", "Apparails");
+    printf("-------------------------------------------------\n");
+    printf("| %-30s |\n", "Jeu");
+    printf("-------------------------------------------------\n");
+}
+
 void showAllProd(void){
     for (int prd=0; prd<N_PROD; prd++)
         showProd(LProd[prd], prd);
@@ -110,8 +127,13 @@ void showClient(Client cli){
 
 void addSolde(Client *cli){
     float addedSolde;
-    printf("Combien voulez-vous disposer: ");
-    scanf("%f", &addedSolde);
+    int verify;
+    do {
+        printf("Combien voulez-vous disposer: ");
+        verify=scanf("%f", &addedSolde);
+        getchar();
+    } while(verify!=1 || addedSolde<0);
+    
     cli->solde+=addedSolde;
 }
 
@@ -124,9 +146,13 @@ void showSolde(Client cli){
 }
 
 int buyProd(Client *cli, Produit *prod){
-    int quantity;
-    printf("Combien de %s voulez-vous acheter", prod->nom);
-    scanf("%d", &quantity);
+    int quantity, verify;
+    do {
+        printf("Combien de %s voulez-vous acheter: ", prod->nom);
+        verify=scanf("%d", &quantity);
+        getchar();
+    } while(verify!=1 || quantity<0);
+    
     if (quantity>prod->stock){
         printf("Stock insuffisant! Stock actuel: %d\n", prod->stock);
         return 0;
@@ -137,27 +163,27 @@ int buyProd(Client *cli, Produit *prod){
     }
     prod->stock-=quantity;
     cli->solde-=quantity*prod->prix;
-    printf("Achat de %d %ss avec succès!\n", quantity, prod->nom);
+    printf("Achat de %d %ss avec succes!\n", quantity, prod->nom);
     return quantity;
 }
 
 void updateHist(Produit *prod, int quantity){
-    if (hist[prod->idProduit][1])
-        hist[prod->idProduit][1]+=quantity;
+    if (hist[prod->idProduit-1][1])
+        hist[prod->idProduit-1][1]+=quantity;
     else{
-        hist[prod->idProduit][0]=prod->idProduit;
-        hist[prod->idProduit][1]=quantity;
+        hist[prod->idProduit-1][0]=prod->idProduit;
+        hist[prod->idProduit-1][1]=quantity;
     }
 }
 
 void showHist(void){
-    printf("-------------------------------------------------\n");
-    printf("| %-30s | %-9s |\n", "Nom", "Quantité");
-    printf("-------------------------------------------------\n");
+    printf("----------------------------------------------\n");
+    printf("| %-30s | %-9s |\n", "Nom", "Quantite");
+    printf("----------------------------------------------\n");
     for (int prd=0; prd<N_PROD; prd++){
-        if (hist[prd][0]==LProd[prd].idProduit){
+        if (hist[prd][1]){
             printf("| %-30s | %-9d |\n", LProd[prd].nom, hist[prd][1]);
-            printf("-------------------------------------------------\n");
+            printf("----------------------------------------------\n");
             break;
         }
     }
@@ -167,7 +193,7 @@ float persStats(void){
     float total=0.0;
     for (int prd=0; prd<N_PROD; prd++){
         if (hist[prd][1]){
-            total+=hist[prd][1]*LProd[prd].prix;
+            total+=hist[prd][1]*LProd[getProdById(prd+1).idProduit-1].prix;
         }
     }
     return total;
@@ -236,7 +262,7 @@ void sortByCat(){
 
 int *findProdByCat(char *cat){
     // dichotomique search
-    int *ids=NULL;
+    ids=NULL;
     int found=0, start=0, end=N_PROD-1, mid, firstMid;
     char lowered[CAT_MAX], catLowered[CAT_MAX];
     lowerString(catLowered, cat);
@@ -279,7 +305,7 @@ int *findProdByCat(char *cat){
 }
 
 int *findProdByName(char *name){
-    int *ids=NULL;
+    ids=NULL;
     int found=0;
     char lowered[PRODUIT_N_MAX], nameLowered[PRODUIT_N_MAX];
     lowerString(nameLowered, name);
@@ -295,7 +321,7 @@ int *findProdByName(char *name){
 }
 
 int *findProdByPrice(float min, float max){
-    int *ids=NULL;
+    ids=NULL;
     int found=0;
     sortByPrice(1);
 

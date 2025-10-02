@@ -44,6 +44,8 @@ extern Client LClient[N_CLI];
 
 extern int gClientId;
 
+extern int *ids;
+
 // extern int histIndex;
 
 void _fillProd(void);
@@ -57,6 +59,8 @@ void showProd(Produit prod, int index);
 void showAllProd(void);
 
 void showDetailProd(Produit prod);
+
+void showCats(void);
 
 Produit getProdById(int id);
 

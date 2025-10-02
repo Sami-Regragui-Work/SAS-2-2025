@@ -5,7 +5,7 @@
 
 
 int main(){
-    int *ids=NULL;
+    ids=NULL;
     char choice1, choice2, choice3;
     int tempInt;
     Produit tempProd;
@@ -50,7 +50,7 @@ int main(){
                 } while (choice2!='0');
                 break;
             case '2': if (gClientId==0){
-                        printf("Creer un profil client d\'abord\n");
+                        printf("\nCreer un profil client d\'abord\n");
                         break;
                     }
                 do{
@@ -85,7 +85,9 @@ int main(){
                     switch(choice2){
                         case '1': showAllProd();
                             break;
-                        case '2': printf("Entrez le nom du produit: ");
+                        case '2': 
+                            showAllProd();
+                            printf("Entrez le nom du produit: ");
                             scanf("%29[^\n]", name); // 29 is PRODUIT_N_MAX-1 for \n
                             getchar();
                             ids=findProdByName(name);
@@ -100,7 +102,9 @@ int main(){
                             else
                                 printf("Aucun produit avec ce nom\n");
                             break;
-                        case '3': printf("Entrez la categorie du produit: ");
+                        case '3': 
+                            showCats();
+                            printf("Entrez la categorie du produit: ");
                             scanf("%29[^\n]", cat); // 29 is CAT_MAX-1 for \n
                             getchar();
                             ids=findProdByCat(cat);
@@ -163,11 +167,13 @@ int main(){
                             break;
                     }
                 } while (choice2!='0');
-            case '4': printf("\n=== EFFECTUER UN ACHAT ===\n");
-                if (gClientId==0){
-                    printf("Creer un profil client d\'abord\n");
+                break;
+            case '4': if (gClientId==0){
+                    printf("\nCreer un profil client d\'abord\n");
                     break;
                 }
+                printf("\n=== EFFECTUER UN ACHAT ===\n");
+                showAllProd();
                 printf("Entrez le nom de produit: ");
                 scanf("%29[^\n]", name); // 29 is PRODUIT_N_MAX-1 for \n
                 getchar();
@@ -193,7 +199,7 @@ int main(){
                     printf("le produit n\'existe pas\n");
                     break;
             case '5': if (gClientId==0){
-                    printf("Creer un profil client d\'abord\n");
+                    printf("\nCreer un profil client d\'abord\n");
                     break;
                 }
                 printf("\n=== STATISTIQUES ===\n");
@@ -204,7 +210,7 @@ int main(){
                 if (choice2=='1')
                     showHist();
                 else if (choice2=='2')
-                    printf("Statistiques personnelles de %s %s sont %.2fMAD\n", LClient[0].prenom, LClient[0].nom, persStats());
+                    printf("%s %s a depense %.2fMAD\n", LClient[0].prenom, LClient[0].nom, persStats());
                 break;
             case '0': printf("Merci d\'avoir utilise notre application!\n");
                 break;
