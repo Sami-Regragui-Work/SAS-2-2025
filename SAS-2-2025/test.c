@@ -9,13 +9,20 @@ void showProdIds(){
 }
 
 int main(){
-
-    char string1[]="HeLlo";
-    char lowered[sizeof(string1)];
-    lowerString(lowered, string1);
-    printf("Original: %s\n", string1);
-    printf("Lowered: %s\n", lowered);
-
+    char name[CLIENT_PaN_MAX];
+    // char choice1;
+    // char string1[]="HeLlo";
+    // char lowered[sizeof(string1)];
+    // lowerString(lowered, string1);
+    // printf("Original: %s\n", string1);
+    // printf("Lowered: %s\n", lowered);
+    // int a=1, b=2;
+    // printf("a: %d, b: %d\n", (a/2)*2-1, (b/2)*2-1);
+    // scanf("%c", &choice1);
+    // printf("You entered: %d\n", choice1-'0');
+    
+    scanf("%19[^\n]", name);
+    printf("You entered: %s\n", name);
 
     // _fillProd();
     // showAllProd();

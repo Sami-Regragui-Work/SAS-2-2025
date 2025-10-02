@@ -44,9 +44,11 @@ extern Client LClient[N_CLI];
 
 extern int gClientId;
 
-extern int histIndex;
+// extern int histIndex;
 
 void _fillProd(void);
+
+void initHist(void);
 
 void _generateIdCli(void);
 
@@ -56,7 +58,7 @@ void showAllProd(void);
 
 void showDetailProd(Produit prod);
 
-// Produit getProdById(int id);
+Produit getProdById(int id);
 
 void addClient(Client *cli);
 
@@ -66,17 +68,19 @@ void showClient(Client cli);
 
 void _generateEmail(Client *cli);
 
-void addSolde(Client *cli, float addedSolde);
+void addSolde(Client *cli);
 
 float getSolde(Client cli);
 
 void showSolde(Client cli);
 
-bool buyProd(Client *cli, Produit *prod);
+int buyProd(Client *cli, Produit *prod);
 
 void updateHist(Produit *prod, int quantity);
 
 void showHist(void);
+
+float persStats(void);
 
 void lowerString(char *lowered, char *str);
 
@@ -84,7 +88,7 @@ int *findProdByName(char *name);
 
 int *findProdByCat(char *cat);
 
-int *findProdByPrice(int min, int max);
+int *findProdByPrice(float min, float max);
 
 void swap(Produit *fr, Produit *sc);
 

@@ -28,8 +28,16 @@ void _fillProd(){
     // strcpy(LProd[0].nom, "Laptop");
 }
 
+void initHist(void){
+    for (int prd=0; prd<N_PROD; prd++){
+        hist[prd][0]=-1;
+        hist[prd][1]=0;
+    }
+}
+
 void _generateIdCli(void){
-    LClient[gClientId].idClient=++gClientId;
+    gClientId++;
+    LClient[gClientId-1].idClient=gClientId;
 }
 
 void showProd(Produit prod, int index){
@@ -55,25 +63,26 @@ void showAllProd(void){
         showProd(LProd[prd], prd);
 }
 
-// Produit getProdById(int id){
-//     for (int prd=0; prd<N_PROD; prd++){
-//         if (LProd[prd].idProduit==id)
-//             return LProd[prd];
-//     }
-//     return (Produit){0, "", "", 0.0, 0, ""};
-// }
+Produit getProdById(int id){
+    for (int prd=0; prd<N_PROD; prd++){
+        if (LProd[prd].idProduit==id)
+            return LProd[prd];
+    }
+    return (Produit){0, "", "", 0.0, 0, ""};
+}
 
 void _generateEmail(Client* cli){
-    snprintf(cli->email, EMAIL_MAX, "%s.%s@client.com", cli->nom, cli->prenom);
+    sprintf(cli->email, "%s.%s@client.com", cli->nom, cli->prenom);
 }
 
 void addClient(Client* cli){
     _generateIdCli();
     printf("Entrez votre nom: ");
-    scanf("%s", cli->nom);
+    scanf("%19s", cli->nom); // 19 is CLIENT_PaN_MAX-1 for \n
     getchar();
     printf("Entrez votre prenom: ");
-    scanf("%s", cli->prenom);
+    scanf("%19s", cli->prenom); // 19 is CLIENT_PaN_MAX-1 for \n
+    getchar();
     _generateEmail(cli);
     printf("Votre email est: %s\n", cli->email);
     cli->solde=0.0;
@@ -82,10 +91,11 @@ void addClient(Client* cli){
 
 void modifyClient(Client* cli){
     printf("Entrez votre nouveau nom: ");
-    scanf("%s", cli->nom);
+    scanf("%19s", cli->nom); // 19 is CLIENT_PaN_MAX-1 for \n
     getchar();
     printf("Entrez votre nouveau prenom: ");
-    scanf("%s", cli->prenom);
+    scanf("%19s", cli->prenom); // 19 is CLIENT_PaN_MAX-1 for \n
+    getchar();
     _generateEmail(cli);
     printf("Votre nouveau email est: %s\n", cli->email);
 }
@@ -98,7 +108,10 @@ void showClient(Client cli){
     printf("Votre Solde: %.2fMAD\n", cli.solde);
 }
 
-void addSolde(Client *cli, float addedSolde){
+void addSolde(Client *cli){
+    float addedSolde;
+    printf("Combien voulez-vous disposer: ");
+    scanf("%f", &addedSolde);
     cli->solde+=addedSolde;
 }
 
@@ -110,7 +123,7 @@ void showSolde(Client cli){
     printf("solde de %s %s actuel est: %.2fMAD\n", cli.prenom, cli.nom, cli.solde);
 }
 
-bool buyProd(Client *cli, Produit *prod){
+int buyProd(Client *cli, Produit *prod){
     int quantity;
     printf("Combien de %s voulez-vous acheter", prod->nom);
     scanf("%d", &quantity);
@@ -122,33 +135,42 @@ bool buyProd(Client *cli, Produit *prod){
         printf("Solde insuffisant! Votre solde est: %.2fMAD\n", getSolde(*cli));
         return 0;
     }
-    prod->stock -= quantity;
-    cli->solde -= quantity*prod->prix;
+    prod->stock-=quantity;
+    cli->solde-=quantity*prod->prix;
     printf("Achat de %d %ss avec succès!\n", quantity, prod->nom);
-    return 1;
+    return quantity;
 }
 
 void updateHist(Produit *prod, int quantity){
-    hist[histIndex][0]=prod->idProduit;
-    hist[histIndex][1]=quantity;
-    histIndex++;
-
+    if (hist[prod->idProduit][1])
+        hist[prod->idProduit][1]+=quantity;
+    else{
+        hist[prod->idProduit][0]=prod->idProduit;
+        hist[prod->idProduit][1]=quantity;
+    }
 }
 
 void showHist(void){
     printf("-------------------------------------------------\n");
     printf("| %-30s | %-9s |\n", "Nom", "Quantité");
     printf("-------------------------------------------------\n");
-    // tr as in transaction
-    for (int tr=0; tr<histIndex; tr++){
-        for (int prd=0; prd<N_PROD; prd++){
-            if (hist[tr][0]==LProd[prd].idProduit){
-                printf("| %-30s | %-9d |\n", LProd[prd].nom, hist[tr][1]);
-                printf("-------------------------------------------------\n");
-                break;
-            }
+    for (int prd=0; prd<N_PROD; prd++){
+        if (hist[prd][0]==LProd[prd].idProduit){
+            printf("| %-30s | %-9d |\n", LProd[prd].nom, hist[prd][1]);
+            printf("-------------------------------------------------\n");
+            break;
         }
     }
+}
+
+float persStats(void){
+    float total=0.0;
+    for (int prd=0; prd<N_PROD; prd++){
+        if (hist[prd][1]){
+            total+=hist[prd][1]*LProd[prd].prix;
+        }
+    }
+    return total;
 }
 
 void lowerString( char *lowered, char *str){
@@ -272,7 +294,7 @@ int *findProdByName(char *name){
     return ids;
 }
 
-int *findProdByPrice(int min, int max){
+int *findProdByPrice(float min, float max){
     int *ids=NULL;
     int found=0;
     sortByPrice(1);

@@ -6,10 +6,10 @@
 * selection d'un produit ✔️
     * afficher detail de produit ✔️
     * quantity de produit ✔️
-        * quantity < stock & quantity * price < solde ✔
-* historique
-* historique size == statistique
-* getProduitById(id) : name  quantity
+        * quantity < stock & quantity * price < solde ✔️
+* historique ✔️
+* historique size == statistique ✔️
+* getProduitById(id) ✔️
 
 === Menu ===
 
@@ -38,19 +38,19 @@
     * Mise à jour : Actualisation du stock produit et solde client ✔️
     * Confirmation : Message de succès ou d'échec de la transaction ✔️
 
-5. 📊 Mes statistiques
+5. 📊 Mes statistiques ✔️
 
-0. 🚪 Quitter l'application
+0. 🚪 Quitter l'application ✔️
 
-> explain typedef
-> explain define
-> explain ifndef
+> explain typedef ❌
+> explain define ❌
+> explain ifndef ❌
 
 > learn and revise 
-   * Bubble Sort
-   * Selection Sort
-   * Insertion Sort
-   * Quick sort
+   * Bubble Sort ✔️
+   * Selection Sort ✔️
+   * Insertion Sort ❌
+   * Quick sort ❌
 > .
 
 === algorithms of sorting ===
@@ -63,6 +63,6 @@
 * Recherche par catégorie : Pour filtrer les produits (bonus) ✔️
 * Recherche par prix : Produits dans une fourchette de prix (bonus) ✔️
 
-TOLOWER;
+TOLOWER ✔️
 
 
